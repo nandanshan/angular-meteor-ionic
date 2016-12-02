@@ -1,0 +1,19 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">New Chat</h1>
+    <div class="buttons">
+      <button class="button button-clear button-positive" ng-click="hideModal()">Cancel</button>
+    </div>
+  </ion-header-bar>
+
+  <ion-content>
+    <div class="list">
+      <a ng-repeat="user in users" ng-click="newChat(user._id)" class="item">
+        <h2>{{user.name}}</h2>
+        <p>
+          {{user.phone}}
+        </p>
+      </a>
+    </div>
+  </ion-content>
+</ion-modal-view>

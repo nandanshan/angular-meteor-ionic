@@ -1,0 +1,21 @@
+<ion-header-bar class="bar bar-positive">
+</ion-header-bar>
+<ion-view>
+  <ion-content>
+    <div class="list">
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Name</span>
+        <input type="text" placeholder="Name" ng-model="model.name">
+      </label>
+
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Mobile Number</span>
+        <input type="text" placeholder="Mobile Number" ng-model="model.phone" maxlength="10">
+      </label>
+      <label class="item item-input">
+        <button class="button button-block button-positive" ng-click="login()">Login</button>
+      </label>
+    </div>
+
+  </ion-content>
+</ion-view>

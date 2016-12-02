@@ -1,0 +1,8 @@
+{
+  "name": "meetang",
+  "app_id": "",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ]
+}
