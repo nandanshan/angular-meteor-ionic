@@ -7,7 +7,9 @@ angular.module('starter')
     // scope.subscribe("messages",function(){
     //   return [$stateParams.chatId]
     // });
-console.log(scope.userId,scope.chatId);
+    scope.subscribe("chats",function(){
+      return [$stateParams.userId,scope.getReactively('$stateParams.userId')]
+    });
 scope.subscribe('chatusers');
     scope.helpers({
       messages: function() {

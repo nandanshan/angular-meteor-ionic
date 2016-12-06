@@ -2,9 +2,14 @@ angular.module('starter')
   .controller("ChatsCtrl", ["$scope", "moment", "$ionicModal", "$ionicPopup", "$stateParams", "$state", "$log", function($scope, moment, $ionicModal, $ionicPopup, $stateParams, $state, $log) {
     var scope = $scope;
     scope.userId = $stateParams.userId;
-    scope.subscribe("chats",function(){
-      return [$stateParams.userId,scope.getReactively('$stateParams.userId')]
-    });
+    if(Meteor.status().connected){
+      console.log("online");
+      scope.subscribe("chats",function(){
+        return [$stateParams.userId,scope.getReactively('$stateParams.userId')]
+      });
+    }else {
+      console.log("offline");
+    }
     scope.subscribe('chatusers');
     scope.helpers({
       chats: function() {

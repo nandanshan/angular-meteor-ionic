@@ -16,16 +16,16 @@ angular.module('starter')
     }
 
     scope.login = function() {
-      if (scope.model.phone.length >= 10 && scope.model.name) {
-        scope.callMethod('newUser', scope.model, function(err, result) {
-          if (err) {
-            return handleError(err);
-          } else {
-            localforage.setItem("currentUserId", result);
-            $state.go('tab.chats',{userId:result});
-          }
-        });
-      }
+      // if (scope.model.phone.length >= 10 && scope.model.name) {
+      //   scope.callMethod('newUser', scope.model, function(err, result) {
+      //     if (err) {
+      //       return handleError(err);
+      //     } else {
+      //       localforage.setItem("currentUserId", result);
+      //       $state.go('tab.chats',{userId:result});
+      //     }
+      //   });
+      // }
     };
 
 

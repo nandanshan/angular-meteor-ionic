@@ -9,7 +9,7 @@ function config($stateProvider, $urlRouterProvider) {
       templateUrl: 'templates/tabs.html'
     })
     .state('tab.chats', {
-      cache:false,
+      cache: false,
       url: '/chats',
       views: {
         'tab-chats': {
@@ -17,8 +17,13 @@ function config($stateProvider, $urlRouterProvider) {
           controller: 'ChatsCtrl'
         }
       },
-      params:{
-        userId:null
+      params: {
+        userId: null
+      },
+      resolve: {
+        login: function($auth) {
+          return $auth.requireUser();
+        }
       }
     })
     .state('tab.chat', {
@@ -30,32 +35,16 @@ function config($stateProvider, $urlRouterProvider) {
           controller: 'ChatCtrl'
         }
       },
-      params:{
-        userId:null,
-        chatId:null
+      params: {
+        userId: null,
+        chatId: null
       }
     })
     .state('login', {
       url: '/login',
-      cache:false,
+      cache: false,
       templateUrl: 'templates/login.html',
-      controller: 'loginCtrl',
-      resolve: {
-        login: function($q, $state) {
-          var defer = $q.defer();
-          localforage.getItem("currentUserId")
-          .then(
-            function(response) {
-              if (response) {
-                defer.reject();
-                $state.go("tab.chats",{userId:response});
-              } else {
-                defer.resolve();
-              }
-            })
-          return defer.promise;
-        }
-      }
+      controller: 'loginCtrl'
     })
     .state('tab.settings', {
       url: '/settings',
