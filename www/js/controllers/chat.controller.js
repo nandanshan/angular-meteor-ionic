@@ -1,34 +1,38 @@
 angular.module('starter')
-  .controller("ChatCtrl", ["$scope", "$stateParams", "moment","$timeout","$ionicScrollDelegate", function($scope, $stateParams, moment,$timeout,$ionicScrollDelegate) {
+  .controller("ChatCtrl", ["$scope", "$stateParams", "moment", "$timeout", "$ionicScrollDelegate", function($scope, $stateParams, moment, $timeout, $ionicScrollDelegate) {
     var scope = $scope;
-    scope.userId = $stateParams.userId;
-    scope.chatId = $stateParams.chatId;
-    // scope.subscribe("chats");
-    // scope.subscribe("messages",function(){
-    //   return [$stateParams.chatId]
-    // });
-    scope.subscribe("chats",function(){
-      return [$stateParams.userId,scope.getReactively('$stateParams.userId')]
-    });
-scope.subscribe('chatusers');
-    scope.helpers({
-      messages: function() {
-        return Messages.find({ chatId: scope.chatId });
+console.log($scope.currentUserId);
+    if (Meteor.status().connected) {
+      $scope.subscribe('users');
+
+      $scope.subscribe("chats", function() {
+        return [$scope.currentUserId]
+      });
+    } else {
+      console.log("offline");
+    }
+
+    $scope.helpers({
+      chat: function() {
+        return Chats.findOne($stateParams.chatId);
       },
-      data: function() {
-        return Chats.findOne(scope.chatId);
+      messages: function() {
+        return Messages.find({
+          chatId: $stateParams.chatId
+        });
       }
     });
+
     // autoScrollBottom();
 
     scope.message = null;
 
     scope.sendMessage = function() {
       if (_.isEmpty(scope.message)) return;
+
       scope.callMethod('newMessage', {
         text: scope.message,
-        chatId: scope.chatId,
-        userId: scope.userId
+        chatId: $stateParams.chatId
       });
 
       delete scope.message;
@@ -45,19 +49,19 @@ scope.subscribe('chatusers');
     }
 
     function autoScrollBottom() {
-        var recentMessagesNum = scope.messages.length;
-        scope.autorun(function() {
-          const currMessagesNum = scope.getCollectionReactively('messages').length;
-          const animate = recentMessagesNum != currMessagesNum;
-          recentMessagesNum = currMessagesNum;
-          scrollBottom(animate);
-        });
-      }
+      var recentMessagesNum = scope.messages.length;
+      scope.autorun(function() {
+        const currMessagesNum = scope.getCollectionReactively('messages').length;
+        const animate = recentMessagesNum != currMessagesNum;
+        recentMessagesNum = currMessagesNum;
+        scrollBottom(animate);
+      });
+    }
 
-      function scrollBottom(animate) {
-        $timeout(function() {
-          $ionicScrollDelegate.$getByHandle('chatScroll').scrollBottom(animate);
-        }, 300);
-      }
+    function scrollBottom(animate) {
+      $timeout(function() {
+        $ionicScrollDelegate.$getByHandle('chatScroll').scrollBottom(animate);
+      }, 300);
+    }
 
   }]);

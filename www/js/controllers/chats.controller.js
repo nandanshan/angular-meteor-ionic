@@ -1,34 +1,29 @@
 angular.module('starter')
-  .controller("ChatsCtrl", ["$scope", "moment", "$ionicModal", "$ionicPopup", "$stateParams", "$state", "$log", function($scope, moment, $ionicModal, $ionicPopup, $stateParams, $state, $log) {
+  .controller("ChatsCtrl", ["$scope", "moment", "$ionicModal", "$ionicPopup", "$state", "$log", function($scope, moment, $ionicModal, $ionicPopup, $state, $log) {
     var scope = $scope;
-    scope.userId = $stateParams.userId;
-    if(Meteor.status().connected){
-      console.log("online");
-      scope.subscribe("chats",function(){
-        return [$stateParams.userId,scope.getReactively('$stateParams.userId')]
+
+    if (Meteor.status().connected) {
+      $scope.subscribe('users');
+
+      $scope.subscribe("chats", function() {
+        return [$scope.currentUserId]
       });
-    }else {
+    } else {
       console.log("offline");
     }
-    scope.subscribe('chatusers');
-    scope.helpers({
-      chats: function() {
-        return Chats.find();
-      },
+
+    $scope.helpers({
       users: function() {
-        return ChatUsers.find({
+        return Meteor.users.find({
           _id: {
-            $ne: scope.userId
+            $ne: $scope.currentUserId
           }
         });
+      },
+      chats: function() {
+        return Chats.find();
       }
     });
-
-    scope.openNewChatModal = openNewChatModal;
-    $scope.hideModal = hideModal;
-    scope.remove = remove;
-    $scope.newChat = newChat;
-
 
     $ionicModal.fromTemplateUrl('templates/new-chat.html', {
       scope: $scope
@@ -40,49 +35,41 @@ angular.module('starter')
       scope.modal.remove();
     });
 
-    function openNewChatModal() {
+    scope.openNewChatModal = function() {
       scope.modal.show();
     }
 
-    function hideModal() {
+    scope.hideModal = function() {
       $scope.modal.hide();
     }
 
-    function newChat(userId) {
+    scope.newChat = function(userId) {
       var chat = Chats.findOne({
         userIds: {
-          $all: [scope.userId, userId]
+          $all: [$scope.currentUserId, userId]
         }
       });
       if (chat) {
         scope.goToChat(chat._id);
       } else {
-
-        var newChat = {
-          this: scope.userId,
-          that: userId
-        }
-        scope.callMethod('newChat', newChat, function(err, result) {
+        scope.callMethod('newChat', userId, function(err, result) {
           if (err) {
             return handleError(err);
           }
-
           scope.goToChat(result);
         });
-
       }
+    };
+
+    scope.remove = function(chat) {
+      scope.callMethod('removeChat', chat._id);
     }
 
     scope.goToChat = function(chatId) {
       $state.go('tab.chat', {
-        userId: scope.userId,
         chatId: chatId
       });
-      hideModal();
-    }
-
-    function remove(chat) {
-      scope.callMethod('removeChat', chat._id);
+      scope.hideModal();
     }
 
     function handleError(err) {

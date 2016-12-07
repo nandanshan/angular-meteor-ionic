@@ -11,21 +11,19 @@ angular.module('starter')
     });
 
     scope.model = {
-      phone: "",
-      name: ""
+      username: "",
+      password: ""
     }
 
     scope.login = function() {
-      // if (scope.model.phone.length >= 10 && scope.model.name) {
-      //   scope.callMethod('newUser', scope.model, function(err, result) {
-      //     if (err) {
-      //       return handleError(err);
-      //     } else {
-      //       localforage.setItem("currentUserId", result);
-      //       $state.go('tab.chats',{userId:result});
-      //     }
-      //   });
-      // }
+
+      Meteor.loginWithPassword(scope.model.username, scope.model.password, function(res){
+        if(res){
+          console.log(res.reason);
+        }else {
+          $state.go('tab.chats');
+        }
+      })
     };
 
 

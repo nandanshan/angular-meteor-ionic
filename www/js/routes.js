@@ -46,6 +46,12 @@ function config($stateProvider, $urlRouterProvider) {
       templateUrl: 'templates/login.html',
       controller: 'loginCtrl'
     })
+    .state('signup', {
+      url: '/signup',
+      cache: false,
+      templateUrl: 'templates/signup.html',
+      controller: 'signupCtrl'
+    })
     .state('tab.settings', {
       url: '/settings',
       views: {

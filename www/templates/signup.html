@@ -7,15 +7,18 @@
         <span class="input-label">Name</span>
         <input type="text" placeholder="Name" ng-model="model.username">
       </label>
-
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Email</span>
+        <input type="text" placeholder="Email" ng-model="model.email">
+      </label>
       <label class="item item-input item-floating-label">
         <span class="input-label">Password</span>
         <input type="text" placeholder="Password" ng-model="model.password">
       </label>
       <label class="item item-input">
-        <button class="button button-block button-positive" ng-click="login()">Login</button>
+        <button class="button button-block button-positive" ng-click="signup()">Sign up</button>
       </label>
-      <p ui-sref="signup">Signup</p>
+      <p ui-sref="login">Login</p>
     </div>
 
   </ion-content>

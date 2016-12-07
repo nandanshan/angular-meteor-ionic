@@ -7,6 +7,7 @@ function SettingsCtrl($scope, $state, $ionicPopup, $log) {
 
   function logout() {
     localforage.clear();
+    Meteor.logout();
     $state.go('login');
   }
 }
