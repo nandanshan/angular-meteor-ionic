@@ -3,12 +3,12 @@ angular
   .filter('chatName', chatName);
 
 function chatName () {
-  return function (chat,userId) {
+  return function (chat) {
     if (!chat) return;
 
-    var otherId = _.without(chat.userIds, userId)[0];
-    var otherUser = ChatUsers.findOne(otherId);
-    var hasName = otherUser && otherUser.name;
-    return hasName ? otherUser.name : 'PLACE HOLDER';
+    var otherId = _.without(chat.userIds, Meteor.userId())[0];
+    var otherUser = Meteor.users.findOne(otherId);
+    var hasName = otherUser && otherUser.username;
+    return hasName ? otherUser.username : 'PLACE HOLDER';
   }
 }

@@ -6,7 +6,6 @@
   <ion-content class="chat" delegate-handle="chatScroll">
     <div class="message-list">
       <div ng-repeat="message in messages" class="message-wrapper">
-        {{message.userId}}$$${{currentUserId}}
         <div class="message" ng-class="message.userId === currentUserId ? 'message-mine' : 'message-other'">
 
           <div class="message-text">{{ message.text }}</div>

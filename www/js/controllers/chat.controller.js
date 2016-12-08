@@ -23,7 +23,7 @@ console.log($scope.currentUserId);
       }
     });
 
-    // autoScrollBottom();
+    autoScrollBottom();
 
     scope.message = null;
 
@@ -59,9 +59,10 @@ console.log($scope.currentUserId);
     }
 
     function scrollBottom(animate) {
+      console.log("coming");
       $timeout(function() {
         $ionicScrollDelegate.$getByHandle('chatScroll').scrollBottom(animate);
-      }, 300);
+      });
     }
 
   }]);

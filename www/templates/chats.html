@@ -11,7 +11,7 @@
                 type="item-text-wrap"
                 ng-click="goToChat(chat._id)">
         <img ng-src="{{chat | chatPicture}}">
-        <h2>{{chat | chatName:userId}}</h2>
+        <h2>{{chat | chatName}}</h2>
         <p>{{ chat.lastMessage.text }}</p>
         <span class="last-message-timestamp">{{ chat.lastMessage.timestamp | calendar }}</span>
         <i class="icon ion-chevron-right icon-accessory"></i>
