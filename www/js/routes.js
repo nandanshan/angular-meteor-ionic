@@ -60,6 +60,15 @@ function config($stateProvider, $urlRouterProvider) {
           controller: 'SettingsCtrl'
         }
       }
+    })
+    .state('tab.wifidirect', {
+      url: '/wifidirect',
+      views: {
+        'tab-wifi': {
+          templateUrl: 'templates/wifiDirect.html',
+          controller: 'wifiDirectCtrl'
+        }
+      }
     });
 
 

@@ -13,7 +13,8 @@
     "localforage": "^1.4.3",
     "angular-meteor-auth": "^1.0.3",
     "accounts-base-client-side": "^1.2.8",
-    "accounts-password-client-side": "^1.1.11"
+    "accounts-password-client-side": "^1.1.11",
+    "ionic-native": "^2.0.3"
   },
   "resolutions": {
     "meteor-client-side": "^1.3.5",
